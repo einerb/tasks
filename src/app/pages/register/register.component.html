@@ -1,0 +1,128 @@
+<div class="row">
+  <div class="col-12">
+    <div class="d-flex justify-content-center">
+      <div class="col-5" style="margin: 8% 0;">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title text-center mb-5">
+              Registrarme
+            </h3>
+            <form [formGroup]="form" (ngSubmit)="onRegister()" class="mb-5">
+              <div class="form-group">
+                <label class="sr-only" for="inlineFormInputGroup"
+                  >Nombres</label
+                >
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-user"></i>
+                    </div>
+                  </div>
+                  <input
+                    type="text"
+                    formControlName="fullname"
+                    class="form-control"
+                    placeholder="Digite nombres"
+                    autofocus
+                    [ngClass]="{
+                      'is-invalid': submitted && f.fullname.errors
+                    }"
+                  />
+                  <span
+                    *ngIf="submitted && f.fullname.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.fullname.invalid" class="alert alert-danger">
+                      Los nombres son requeridos
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="inlineFormInputGroup"
+                  >Correo electrónico</label
+                >
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-lock"></i>
+                    </div>
+                  </div>
+                  <input
+                    type="text"
+                    formControlName="email"
+                    class="form-control"
+                    placeholder="Digite correo electrónico"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }"
+                    [email]="true"
+                  />
+                  <span
+                    *ngIf="submitted && f.email.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="f.email.invalid" class="alert alert-danger">
+                      El correo electrónico es inválido. Por ejemplo
+                      <span class="font-weight-bold">email@mail.com</span>
+                    </div>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="inlineFormInputGroup"
+                  >Contraseña</label
+                >
+                <div class="input-group mb-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">
+                      <i class="fa fa-lock"></i>
+                    </div>
+                  </div>
+                  <input
+                    type="password"
+                    formControlName="password"
+                    class="form-control"
+                    placeholder="Digite contraseña"
+                    minlength="5"
+                    [ngClass]="{
+                      'is-invalid': submitted && f.password.errors
+                    }"
+                  />
+                  <div
+                    *ngIf="submitted && f.password.errors"
+                    class="invalid-feedback"
+                  >
+                    <div
+                      *ngIf="f.password.errors.required"
+                      class="alert alert-danger"
+                    >
+                      Contraseña requerida
+                    </div>
+                    <div
+                      *ngIf="f.password.errors.minlength"
+                      class="alert alert-danger"
+                    >
+                      Contraseña muy corta.
+                      <span class="font-weight-bold">Min 5 caracteres</span>.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center">
+                <button
+                  type="submit"
+                  [disabled]="loading"
+                  class="btn btn-success mr-2"
+                >
+                  Registrarme
+                </button>
+                <a routerLink="/login" class="btn btn-secondary ml-2"
+                  >Cancelar</a
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

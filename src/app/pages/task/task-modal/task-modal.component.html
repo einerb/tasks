@@ -1,0 +1,74 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{ title }}</h4>
+  <button
+    type="button"
+    class="close pull-right"
+    aria-label="Close"
+    (click)="editTaskModal.dismiss('modal close')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body p-3">
+  <form #editTaskForm="ngForm">
+    <div class="form-group row">
+      <div class="col-12">
+        <label for="name">Nombre:</label>
+        <input
+          name="name"
+          class="form-control"
+          id="name"
+          [(ngModel)]="taskDataCopy.name"
+          #name="ngModel"
+          required
+        />
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-12">
+        <label for="priority">Prioridad:</label>
+        <select
+          name="priority"
+          class="form-control"
+          id="priority"
+          [(ngModel)]="taskDataCopy.priority"
+          #priority="ngModel"
+          required
+        >
+          <option value="">Seleccione prioridad</option>
+          <option value="baja">Baja</option>
+          <option value="media">Media</option>
+          <option value="alta">Alta</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-12">
+        <label for="expiration">Fecha expiración:</label>
+        <input
+          type="date"
+          name="expiration"
+          class="form-control"
+          id="expiration"
+          [(ngModel)]="taskDataCopy.expiration"
+          #expiration="ngModel"
+          required
+        />
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button
+    *ngIf="editMode"
+    type="button"
+    class="btn btn-outline-primary pull-left"
+    (click)="undoChanges()"
+  >
+    <i class="fa fa-undo"></i> Deshacer Cambios
+  </button>
+  <button type="submit" class="btn btn-success pull-right" (click)="onSave()">
+    <span *ngIf="editMode"> <i class="fa fa-check-circle"></i> Guardar </span>
+    <span *ngIf="!editMode"> <i class="fa fa-plus"></i> Crear </span>
+  </button>
+</div>

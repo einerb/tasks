@@ -1,0 +1,14 @@
+.row {
+  margin: 0 auto;
+  background: #f2f8f9;
+}
+
+.imagen-fullscreen {
+  background: url(https://images.pexels.com/photos/1785493/pexels-photo-1785493.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940)
+    no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh;
+}
