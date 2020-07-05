@@ -3,8 +3,8 @@ import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { parse } from 'himalaya';
 import { Router } from '@angular/router';
+import { parse } from 'himalaya';
 
 import { TaskUser } from 'src/app/interfaces/task.interface';
 import { TaskService } from 'src/app/services/task.service';
@@ -81,7 +81,5 @@ export class TaskModalComponent implements OnInit {
   private onSuccess() {
     this.editTaskModal.close();
     Swal.fire('Enhorabuena!', 'Registro guardado exitosamente.', 'success');
-
-    this.router.navigate(['/home']);
   }
 }
