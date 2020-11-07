@@ -14,10 +14,9 @@ import { first, delay } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   public form: FormGroup;
   public loading = false;
-  public passMinLegth = 5;
   public submitted = false;
   public user;
-  hoy = new Date();
+  public hoy = new Date();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +29,8 @@ export class LoginComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    localStorage.clear();
   }
 
   get f() {
@@ -37,8 +38,6 @@ export class LoginComponent implements OnInit {
   }
 
   public onLoginEmailPassword() {
-    localStorage.removeItem('user');
-
     this.submitted = true;
     if (this.form.invalid) {
       return;

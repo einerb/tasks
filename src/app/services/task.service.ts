@@ -49,9 +49,9 @@ export class TaskService {
       );
   }
 
-  public deleteTask(id: any) {
+  public deleteTask(task: Task) {
     return this.globalService
-      .delete(Constant.Endpoints.TASK.DELETE + '/' + id)
+      .delete(Constant.Endpoints.TASK.DELETE + '/' + task._id)
       .pipe(
         map((res) => {
           return res;

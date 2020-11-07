@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a
     class="navbar-brand font-weight-bold"
-    [routerLink]="['/home']"
+    (click)="goHome()"
     routerLinkActive="is-active"
     >TASKS APP</a
   >
@@ -19,9 +19,13 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link font-weight-bold" (click)="logout()"
-          >Cerrar sesión</a
-        >
+        <a class="nav-link" (click)="goHome()">Inicio</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="goProfile()">Mi Perfil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()"><i class="fa fa-power-off"></i></a>
       </li>
     </ul>
   </div>

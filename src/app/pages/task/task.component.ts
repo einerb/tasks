@@ -4,9 +4,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { Task } from '../../interfaces/task.interface';
-import { TaskModalComponent } from '../task/task-modal/task-modal.component';
+
 import { TaskService } from 'src/app/services/task.service';
 import { UserService } from '../../services/user.service';
+import { User } from 'src/app/interfaces/user.interface';
+import { TaskModalComponent } from './task-modal/task-modal.component';
 
 @Component({
   selector: 'app-task',
@@ -15,30 +17,25 @@ import { UserService } from '../../services/user.service';
 })
 export class TaskComponent implements OnInit {
   public count = 0;
-  public taskData: Task[];
-  public editingMode: boolean;
-  public selected: Task;
-  public selectedRow: number;
-  public taskToEdit: Task;
-  public visible = false;
-  public user: any;
+  public taskData: Task[] = [];
+  public userInfo: User;
 
   constructor(
-    private userService: UserService,
-    private taskService: TaskService,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
+    private taskService: TaskService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('user'));
     this.spinner.show();
     this.allTasks();
   }
 
   private allTasks() {
-    this.userService.getById(this.user.id).subscribe((res) => {
+    this.userService.getById('5fa5e3c54888692ce452bfde').subscribe((res) => {
       this.taskData = res.data.tasks;
+      this.userInfo = res.data;
 
       this.spinner.hide();
     });
@@ -67,36 +64,22 @@ export class TaskComponent implements OnInit {
     });
   }
 
-  public onSelect = (task: Task) => {
-    this.selected = task;
-    this.editTask();
-  };
-
-  public setClickedRow = (index: number) => {
-    this.selectedRow = index;
-  };
-
-  public addTask() {
-    this.editingMode = false;
-    this.openEditTaskModal();
-  }
-
-  public editTask() {
-    this.editingMode = true;
-    this.openEditTaskModal();
-  }
-
-  public openEditTaskModal() {
+  public openTaskModal(editingMode: boolean, task?: string) {
     const modalRef = this.modalService.open(TaskModalComponent, {
       windowClass: 'large-modal',
     });
 
-    modalRef.componentInstance.editMode = this.editingMode;
-    modalRef.componentInstance.title = this.editingMode
+    modalRef.componentInstance.editingMode = editingMode;
+    modalRef.componentInstance.userInfo = this.userInfo;
+    modalRef.componentInstance.title = editingMode
       ? 'Editar tarea'
       : 'Crear tarea';
-    modalRef.componentInstance.taskData = this.editingMode
-      ? this.selected
-      : null;
+    modalRef.componentInstance.taskData = editingMode ? task : null;
+
+    modalRef.result.then((result) => {
+      if (result == 'success') {
+        this.allTasks();
+      }
+    });
   }
 }

@@ -4,24 +4,24 @@
   color="#fff"
   type="ball-spin-clockwise"
   [fullScreen]="true"
-  ><p style="color: white;">Cargando...</p></ngx-spinner
+  ><p style="color: white">Cargando...</p></ngx-spinner
 >
 
 <app-navbar></app-navbar>
 
 <div class="container">
-  <h1>Bienvenido {{ user.fullname }}</h1>
+  <h2>
+    Bienvenido, <small>{{ userInfo?.fullname }}</small>
+  </h2>
 
   <div class="row mt-5 mb-3">
     <div class="col-xs-6 col-sm-8 col-md-9">
-      <h4>
-        Listado de tareas
-      </h4>
+      <h4>Mis tareas</h4>
     </div>
     <div class="d-none d-sm-block col-sm-4 col-md-3">
       <div class="d-flex justify-content-end">
-        <a (click)="addTask()" class="btn btn-success"
-          >Crear curso <i class="fa fa-plus"></i
+        <a (click)="openTaskModal(false)" class="btn btn-success"
+          >Crear tarea <i class="fa fa-plus"></i
         ></a>
       </div>
     </div>
@@ -35,37 +35,52 @@
           <th scope="col">Nombre</th>
           <th scope="col">Prioridad</th>
           <th scope="col">Fecha expiración</th>
-          <th scope="col">Eliminar</th>
+          <th scope="col">Tiempo restante</th>
+          <th scope="col">Editar/Eliminar</th>
         </tr>
       </thead>
       <tbody>
-        <tr
-          *ngFor="let item of taskData; let i = index"
-          (dblclick)="onSelect(item)"
-          (click)="setClickedRow(i)"
-          [class.active]="i == selectedRow"
-          style="cursor: pointer;"
-          title="Doble click para editar"
-        >
+        <tr *ngFor="let item of taskData; let i = index">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ item.name | titlecase }}</td>
-          <td>{{ item.priority | titlecase }}</td>
-          <td>{{ item.expiration | date: "medium" }}</td>
           <td>
-            <a (click)="deleteTask(item._id)" style="cursor: pointer;"
-              ><i class="fa fa-trash text-danger"></i
+            <span
+              class="badge"
+              [ngClass]="{
+                'badge-success': item.priority === 'alta',
+                'badge-warning': item.priority === 'media',
+                'badge-danger': item.priority === 'baja'
+              }"
+              >{{ item.priority | titlecase }}</span
+            >
+          </td>
+          <td>{{ item.expiration | date: "medium" }}</td>
+          <td>2h 3m 4s</td>
+          <td>
+            <a
+              (click)="openTaskModal(true, item)"
+              class="mr-1"
+              style="cursor: pointer"
+              title="Editar"
+              ><i class="fa fa-edit text-primary"></i
+            ></a>
+            <a
+              (click)="deleteTask(item)"
+              class="ml-1"
+              style="cursor: pointer"
+              title="Eliminar"
+              ><i class="fa fa-close text-danger"></i
             ></a>
           </td>
         </tr>
-
-        <tr *ngIf="visible">
-          <td colspan="7">No hay tareas!</td>
-        </tr>
       </tbody>
     </table>
+    <p class="d-flex justify-content-center" *ngIf="taskData.length === 0">
+      No hay tareas guardadas!
+    </p>
     <hr />
     <span class="font-weight-bold float-right"
-      >Cantidad de registros: {{ this.taskData?.length }}</span
+      >Cantidad: {{ taskData?.length }}</span
     >
   </div>
 </div>

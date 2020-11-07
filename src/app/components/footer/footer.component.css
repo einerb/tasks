@@ -4,5 +4,6 @@ footer {
   background-color: #eeeeee;
   text-align: center;
   color: #6b6a6a;
-  margin-top: 10%;
+  margin-top: 5%;
+  position: relative;
 }

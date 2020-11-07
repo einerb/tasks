@@ -11,14 +11,10 @@ export class Constant {
     getToken: () => {
       return localStorage.getItem('token');
     },
-    getUser: () => {
-      return JSON.parse(localStorage.getItem('user'));
-    },
     CLIENT_ID: '3',
     CLIENT_SECRET: 'g3MPIf6ue6HAOi5CuA6H',
     KEYS: {
       token: 'token',
-      userData: 'user',
       urlBeforExpelling: 'urlBeforExpelling',
     },
   };

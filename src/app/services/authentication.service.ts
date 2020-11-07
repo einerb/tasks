@@ -29,15 +29,13 @@ export class AuthenticationService {
       .pipe(
         map((res) => {
           localStorage.setItem('token', res['token']);
-          localStorage.setItem('user', JSON.stringify(res['user']));
-
           return res;
         })
       );
   }
 
   public isLoggedIn() {
-    if (localStorage.getItem('token') && localStorage.getItem('user')) {
+    if (localStorage.getItem('token')) {
       return true;
     }
     return false;

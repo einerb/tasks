@@ -1,8 +1,8 @@
 export class User {
-  id: string;
-  fullname: string;
-  email: string;
-  password: string;
+  public id: string;
+  public fullname: string;
+  public email: string;
+  public password: string;
 
   constructor(item?: User) {
     this.id = item && item.id ? item.id : null;

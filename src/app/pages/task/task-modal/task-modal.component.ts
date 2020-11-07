@@ -1,5 +1,12 @@
 import Swal from 'sweetalert2';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -8,6 +15,7 @@ import { parse } from 'himalaya';
 
 import { TaskUser } from 'src/app/interfaces/task.interface';
 import { TaskService } from 'src/app/services/task.service';
+import { User } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-task-modal',
@@ -15,13 +23,11 @@ import { TaskService } from 'src/app/services/task.service';
   styleUrls: ['./task-modal.component.css'],
 })
 export class TaskModalComponent implements OnInit {
-  public user: any;
-
   @ViewChild('editTaskForm', { static: false }) editTaskForm: NgForm;
-  @Input() editMode: boolean;
+  @Input() editingMode: boolean;
   @Input() taskData: TaskUser;
+  @Input() userInfo: User;
   @Input() title: string;
-  @Input() visible: string;
 
   public taskDataCopy: TaskUser;
 
@@ -29,33 +35,33 @@ export class TaskModalComponent implements OnInit {
 
   constructor(
     public editTaskModal: NgbActiveModal,
-    private taskService: TaskService,
-    private router: Router
+    private taskService: TaskService
   ) {}
 
   ngOnInit(): void {
-    this.user = JSON.parse(localStorage.getItem('user'));
-
-    this.taskDataCopy = new TaskUser(this.editMode ? this.taskData : null);
+    this.taskDataCopy = new TaskUser(this.editingMode ? this.taskData : null);
   }
 
   public onSave() {
-    this.editTaskForm.ngSubmit.emit();
     if (this.editTaskForm.valid) {
-      if (this.editMode) {
+      if (this.editingMode) {
         this.taskService.updateTask(this.taskDataCopy).subscribe(
           () => {
             this.onSuccess();
+            this.editTaskModal.close('success');
           },
           (err) => this.onFailure(err)
         );
       } else {
-        this.taskService.createTask(this.user.id, this.taskDataCopy).subscribe(
-          () => {
-            this.onSuccess();
-          },
-          (err) => this.onFailure(err)
-        );
+        this.taskService
+          .createTask(this.userInfo.id, this.taskDataCopy)
+          .subscribe(
+            () => {
+              this.onSuccess();
+              this.editTaskModal.close('success');
+            },
+            (err) => this.onFailure(err)
+          );
       }
     } else {
     }
@@ -79,7 +85,6 @@ export class TaskModalComponent implements OnInit {
   };
 
   private onSuccess() {
-    this.editTaskModal.close();
     Swal.fire('Enhorabuena!', 'Registro guardado exitosamente.', 'success');
   }
 }

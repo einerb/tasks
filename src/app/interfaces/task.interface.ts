@@ -1,8 +1,8 @@
 export class Task {
-  _id: string;
-  name: string;
-  priority: string;
-  expiration: string;
+  public _id: string;
+  public name: string;
+  public priority: string;
+  public expiration: string;
 
   constructor(item?: Task) {
     this._id = item && item._id ? item._id : null;

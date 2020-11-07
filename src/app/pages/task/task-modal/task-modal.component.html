@@ -60,7 +60,7 @@
 </div>
 <div class="modal-footer">
   <button
-    *ngIf="editMode"
+    *ngIf="editingMode"
     type="button"
     class="btn btn-outline-primary pull-left"
     (click)="undoChanges()"
@@ -68,7 +68,7 @@
     <i class="fa fa-undo"></i> Deshacer Cambios
   </button>
   <button type="submit" class="btn btn-success pull-right" (click)="onSave()">
-    <span *ngIf="editMode"> <i class="fa fa-check-circle"></i> Guardar </span>
-    <span *ngIf="!editMode"> <i class="fa fa-plus"></i> Crear </span>
+    <span *ngIf="editingMode"> <i class="fa fa-check-circle"></i> Guardar </span>
+    <span *ngIf="!editingMode"> <i class="fa fa-plus"></i> Crear </span>
   </button>
 </div>
