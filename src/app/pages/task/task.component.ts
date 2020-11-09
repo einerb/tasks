@@ -1,14 +1,15 @@
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import { GlobalService } from 'src/app/services/global.service';
 import { Task } from '../../interfaces/task.interface';
-
-import { TaskService } from 'src/app/services/task.service';
-import { UserService } from '../../services/user.service';
-import { User } from 'src/app/interfaces/user.interface';
 import { TaskModalComponent } from './task-modal/task-modal.component';
+import { TaskService } from 'src/app/services/task.service';
+import { User } from 'src/app/interfaces/user.interface';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-task',
@@ -19,8 +20,11 @@ export class TaskComponent implements OnInit {
   public count = 0;
   public taskData: Task[] = [];
   public userInfo: User;
+  public userId: any;
+  public dateEnd;
 
   constructor(
+    private globalService: GlobalService,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
     private taskService: TaskService,
@@ -33,12 +37,17 @@ export class TaskComponent implements OnInit {
   }
 
   private allTasks() {
-    this.userService.getById('5fa5e3c54888692ce452bfde').subscribe((res) => {
+    this.userId = this.globalService.getDecodedToken();
+    this.userService.getById(this.userId.sub).subscribe((res) => {
       this.taskData = res.data.tasks;
       this.userInfo = res.data;
 
       this.spinner.hide();
     });
+  }
+
+ public getTodayFormatted(date: any): string {
+    return moment(date).endOf('day').fromNow();
   }
 
   public deleteTask(id: any) {

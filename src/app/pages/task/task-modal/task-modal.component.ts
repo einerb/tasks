@@ -4,13 +4,10 @@ import {
   OnInit,
   ViewChild,
   Input,
-  EventEmitter,
-  Output,
 } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 import { parse } from 'himalaya';
 
 import { TaskUser } from 'src/app/interfaces/task.interface';

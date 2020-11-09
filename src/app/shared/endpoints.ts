@@ -7,6 +7,7 @@ export const Endpoint = {
   USER: {
     CREATE: environment.api.base + 'users/register',
     ALL: environment.api.base + 'users',
+    UPDATE: environment.api.base + 'users/update',
   },
   TASK: {
     CREATE: environment.api.base + 'tasks/create',

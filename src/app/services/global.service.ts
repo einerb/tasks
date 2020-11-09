@@ -1,3 +1,4 @@
+import jwt_decode from 'jwt-decode';
 import {
   HttpHeaders,
   HttpClient,
@@ -64,6 +65,10 @@ export class GlobalService {
    */
   getToken(): string {
     return Constant.AUTH.getToken();
+  }
+
+  public getDecodedToken() {
+    return jwt_decode(localStorage.getItem('token'));
   }
 
   /**

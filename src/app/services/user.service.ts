@@ -35,4 +35,14 @@ export class UserService {
       })
     );
   }
+
+  public updateUser(id: string, user: User) {
+    return this.globalService
+      .put(Constant.Endpoints.USER.UPDATE + '/' + id, user)
+      .pipe(
+        map((res) => {
+          return res;
+        })
+      );
+  }
 }

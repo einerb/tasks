@@ -55,7 +55,7 @@
             >
           </td>
           <td>{{ item.expiration | date: "medium" }}</td>
-          <td>2h 3m 4s</td>
+          <td>{{ getTodayFormatted(item.expiration) }}</td>
           <td>
             <a
               (click)="openTaskModal(true, item)"
